@@ -37,9 +37,18 @@ public class Jogo extends Evento {
         this.precoTotal = precoTotal;
     }
 
+    public double getPrecoTorcedor() {
+        precoTotal = precoTotal - (precoTotal * descontoTorcedor);
+        return  precoTotal;
+    }
+
+    public double getPrecoTorcedorMeia() {
+        precoTotal = precoTotal - (precoTotal * descontoTorcedor);
+        return precoTotal / 2.0;
+    }
+
     @Override
     public double getPrecoInteira() {
-        precoTotal = precoTotal - (precoTotal * descontoTorcedor);
         return precoTotal;
     }
 
