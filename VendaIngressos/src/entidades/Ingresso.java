@@ -1,5 +1,5 @@
 package entidades;
 
-public class Ingresso {
+public abstract class Ingresso {
     
 }

@@ -1,5 +1,5 @@
 package entidades.evento;
 
-public class Exposicao {
+public class Exposicao extends Evento{
     
 }
