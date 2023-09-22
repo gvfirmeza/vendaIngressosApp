@@ -1,5 +1,5 @@
 package entidades.evento;
 
-public class Evento {
+public abstract class Evento {
     
 }
