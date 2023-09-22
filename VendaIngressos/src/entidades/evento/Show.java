@@ -1,46 +1,59 @@
 package entidades.evento;
 
-import entidades.TipoIngresso;
-
 // Subclasse Shows
-class Shows extends Evento {
-    private int faixaEtariaMinima;
-    private int duracaoEmDias;
+public class Show extends Evento {
+    private String nomeArtista;
+    private String generoMusica;
+    private boolean pista;
+    private double precoTotal;
 
-    // Construtor
-    public Shows(String nome, String data, String local, int ingressosInteira, int ingressosMeia, int faixaEtariaMinima, int duracaoEmDias) {
+    public Show(String nome, String data, String local, int ingressosInteira, int ingressosMeia, String nomeArtista, String generoMusica, boolean pista, double precoTotal) {
         super(nome, data, local, ingressosInteira, ingressosMeia);
-        this.faixaEtariaMinima = faixaEtariaMinima;
-        this.duracaoEmDias = duracaoEmDias;
+        this.nomeArtista = nomeArtista;
+        this.generoMusica = generoMusica;
+        this.pista = pista;
+        this.precoTotal = precoTotal;
     }
 
-    // Getters e Setters
-    public int getFaixaEtariaMinima() {
-        return faixaEtariaMinima;
+    public String getNomeArtista() {
+        return this.nomeArtista;
     }
 
-    public void setFaixaEtariaMinima(int faixaEtariaMinima) {
-        this.faixaEtariaMinima = faixaEtariaMinima;
+    public void setNomeArtista(String nomeArtista) {
+        this.nomeArtista = nomeArtista;
     }
 
-    public int getDuracaoEmDias() {
-        return duracaoEmDias;
+    public String getGeneroMusica() {
+        return this.generoMusica;
     }
 
-    public void setDuracaoEmDias(int duracaoEmDias) {
-        this.duracaoEmDias = duracaoEmDias;
+    public void setGeneroMusica(String generoMusica) {
+        this.generoMusica = generoMusica;
     }
 
-    // Implementação dos métodos abstratos de Evento
+    public boolean getPista() {
+        return this.pista;
+    }
+
+    public void setPista(boolean pista) {
+        this.pista = pista;
+    }
+
+    public String isPista() {
+        if (pista == true) {
+            return "Pista!!!";
+        } else {
+            return "Camarote!!!";
+        }
+    }
+
     @Override
     public double getPrecoInteira() {
-        // Defina o preço da inteira conforme necessário
-        return 50.0;
+            return precoTotal;
     }
 
     @Override
     public double getPrecoMeia() {
-        // Defina o preço da meia conforme necessário
-        return 25.0;
+        return precoTotal/2;
     }
 }
