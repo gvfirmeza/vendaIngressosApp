@@ -1,4 +1,4 @@
-package entidades;
+package entidades.ingresso;
 
 import entidades.evento.Evento;
 
@@ -38,11 +38,5 @@ public abstract class Ingresso {
         this.tipo = tipo;
     }
 
-    public double getPreco() {
-        if (tipo == TipoIngresso.INTEIRA) {
-            return precoCheio;
-        } else {
-            return precoCheio / 2.0;
-        }
-    }
+    public abstract double getPreco();
 }

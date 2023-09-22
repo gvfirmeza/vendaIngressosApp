@@ -1,5 +1,7 @@
 package entidades.evento;
 
+import entidades.ingresso.TipoIngresso;
+
 public abstract class Evento {
     private String nome;
     private String data;
