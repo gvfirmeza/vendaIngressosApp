@@ -1,6 +1,6 @@
 package entidades.evento;
 
-import entidades.TipoIngresso;
+import entidades.ingresso.TipoIngresso;
 
 public abstract class Evento {
     private String nome;

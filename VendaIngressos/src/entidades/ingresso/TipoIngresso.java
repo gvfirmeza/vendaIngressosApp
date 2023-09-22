@@ -1,4 +1,4 @@
-package entidades;
+package entidades.ingresso;
 
 public enum TipoIngresso {
     INTEIRA, 
