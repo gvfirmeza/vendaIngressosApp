@@ -4,12 +4,14 @@ public class Exposicao extends Evento {
     private int faixaEtariaMinima;
     private int duracaoDias;
     private boolean descontoSocial;
+    private double precoEvento;
 
-    public Exposicao(String nome, String data, String local, int ingressosInteira, int ingressosMeia, int faixaEtariaMinima, int duracaoDias, boolean descontoSocial) {
+    public Exposicao(String nome, String data, String local, int ingressosInteira, int ingressosMeia, int faixaEtariaMinima, int duracaoDias, boolean descontoSocial, double precoEvento) {
         super(nome, data, local, ingressosInteira, ingressosMeia);
         this.faixaEtariaMinima = faixaEtariaMinima;
         this.duracaoDias = duracaoDias;
         this.descontoSocial = descontoSocial;
+        this.precoEvento = precoEvento;
     }
 
     public int getFaixaEtariaMinima() {
@@ -36,12 +38,20 @@ public class Exposicao extends Evento {
         this.descontoSocial = descontoSocial;
     }
 
+    public double getPrecoEvento() {
+        return precoEvento;
+    }
+
+    public void setPrecoEvento(double precoEvento) {
+        this.precoEvento = precoEvento;
+    }
+
     @Override
     public double getPrecoInteira() {
         if (descontoSocial) {
             return 0.0; // Ingresso com desconto social é gratuito
         } else {
-            return 20.0; // Valor de exemplo para inteira
+            return precoEvento; // Preço do evento para inteira
         }
     }
 
@@ -50,7 +60,8 @@ public class Exposicao extends Evento {
         if (descontoSocial) {
             return 0.0; // Ingresso com desconto social é gratuito
         } else {
-            return 10.0; // Valor de exemplo para meia-entrada
+            return precoEvento / 2.0; // Metade do preço do evento para meia-entrada
         }
     }
 }
+
