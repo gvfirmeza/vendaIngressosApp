@@ -7,6 +7,7 @@ import entidades.evento.Exposicao;
 import entidades.evento.Jogo;
 import entidades.evento.Show;
 import entidades.ingresso.Ingresso;
+import entidades.ingresso.TipoIngresso;
 
 public class Menu {
 
@@ -82,13 +83,13 @@ public class Menu {
         System.out.println("3. Cadastrar Show");
         System.out.print("Escolha uma opção: ");
         int escolha = scanner.nextInt();
-        Evento evento = null; 
+        Evento evento = null;
         switch (escolha) {
             case 1:
-                //Cadastrar exposição
+                // Cadastrar exposição
                 System.out.println("Informe o nome da exposição:");
-                String nomeExpo = scanner.nextLine(); 
-                nomeExpo = scanner.nextLine(); 
+                String nomeExpo = scanner.nextLine();
+                nomeExpo = scanner.nextLine();
 
                 System.out.println("Informe a data da exposição:");
                 String dataExpo = scanner.nextLine();
@@ -116,7 +117,7 @@ public class Menu {
                 evento = exposicao;
                 break;
             case 2:
-                //Cadastrar jogo
+                // Cadastrar jogo
                 System.out.println("Informe o nome do jogo:");
                 String nomeJogo = scanner.nextLine();
                 nomeJogo = scanner.nextLine();
@@ -147,10 +148,10 @@ public class Menu {
                 evento = jogo;
                 break;
             case 3:
-                //Cadastrar show
+                // Cadastrar show
                 System.out.println("Informe o nome do show:");
-                String nomeShow = scanner.nextLine(); 
-                nomeShow = scanner.nextLine(); 
+                String nomeShow = scanner.nextLine();
+                nomeShow = scanner.nextLine();
 
                 System.out.println("Informe a data do show:");
                 String dataShow = scanner.nextLine();
@@ -171,10 +172,11 @@ public class Menu {
                 String generoMusicaShow = scanner.nextLine();
 
                 System.out.println("Informe o preço do evento:");
-                double precoEventoShow = scanner.nextDouble();              
+                double precoEventoShow = scanner.nextDouble();
 
-                Show show = new Show(nomeShow, dataShow, localShow, ingressosInteiraShow, ingressosMeiaShow, nomeArtistaShow, generoMusicaShow, precoEventoShow);
-                evento = show; 
+                Show show = new Show(nomeShow, dataShow, localShow, ingressosInteiraShow, ingressosMeiaShow,
+                        nomeArtistaShow, generoMusicaShow, precoEventoShow);
+                evento = show;
                 break;
             default:
                 System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
@@ -183,13 +185,13 @@ public class Menu {
     }
 
     private static Ingresso realizarVendaIngresso(Evento evento) {
-        return null; 
+        return null;
     }
 
     private static void exibirInformacoesEvento(Evento evento) {
         if (evento != null) {
             System.out.println("\nInformações do Evento:");
-                
+
             if (evento instanceof Exposicao) {
                 Exposicao exposicao = (Exposicao) evento;
                 System.out.println("\nTipo de evento: Exposição");
@@ -223,11 +225,42 @@ public class Menu {
         } else {
             System.out.println("Este evento não existe.");
         }
-        }        
-    
+    }
 
     private static void exibirNumeroIngressosRestantes(Evento evento) {
+        if (evento != null) {
+            System.out.println("\nNúmero de Ingressos Restantes:");
 
+            if (evento instanceof Exposicao) {
+                Exposicao exposicao = (Exposicao) evento;
+                int ingressosInteiraRestantes = exposicao.getIngressosInteira();;
+                int ingressosMeiaRestantes = exposicao.getIngressosMeia();;
+                
+                System.out.println("Tipo de evento: Exposição");
+                System.out.println("Ingressos Inteiros Restantes: " + ingressosInteiraRestantes);
+                System.out.println("Ingressos Meia Restantes: " + ingressosMeiaRestantes);
+            } else if (evento instanceof Jogo) {
+                Jogo jogo = (Jogo) evento;
+                int ingressosInteiraRestantes = jogo.getIngressosInteira();
+                int ingressosMeiaRestantes = jogo.getIngressosMeia();
+
+                System.out.println("Tipo de evento: Jogo");
+                System.out.println("Ingressos Inteiros Restantes: " + ingressosInteiraRestantes);
+                System.out.println("Ingressos Meia Restantes: " + ingressosMeiaRestantes);
+            } else if (evento instanceof Show) {
+                Show show = (Show) evento;
+                int ingressosInteiraRestantes = show.getIngressosInteira();
+                int ingressosMeiaRestantes = show.getIngressosMeia();
+
+                System.out.println("Tipo de evento: Show");
+                System.out.println("Ingressos Inteiros Restantes: " + ingressosInteiraRestantes);
+                System.out.println("Ingressos Meia Restantes: " + ingressosMeiaRestantes);
+            } else {
+                System.out.println("Nenhum evento deste tipo foi registrado.");
+            }
+        } else {
+            System.out.println("Este evento não existe.");
+        }
     }
 
     private static void exibirInformacoesIngresso(Ingresso ingresso) {
