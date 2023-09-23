@@ -7,11 +7,10 @@ public class Show extends Evento {
     private boolean pista;
     private double precoTotal;
 
-    public Show(String nome, String data, String local, int ingressosInteira, int ingressosMeia, String nomeArtista, String generoMusica, boolean pista, double precoTotal) {
+    public Show(String nome, String data, String local, int ingressosInteira, int ingressosMeia, String nomeArtista, String generoMusica, double precoTotal) {
         super(nome, data, local, ingressosInteira, ingressosMeia);
         this.nomeArtista = nomeArtista;
         this.generoMusica = generoMusica;
-        this.pista = pista;
         this.precoTotal = precoTotal;
     }
 
@@ -39,13 +38,9 @@ public class Show extends Evento {
         this.pista = pista;
     }
 
-    public boolean isPista() {
-        return this.pista;
-    }
-
     @Override
     public double getPrecoInteira() {
-            return precoTotal;
+        return precoTotal;
     }
 
     @Override

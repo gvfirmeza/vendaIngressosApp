@@ -16,7 +16,7 @@ public class Menu {
         Ingresso ultimoIngressoVendido = null;
 
         while (true) {
-            System.out.println("Menu de Opções:");
+            System.out.println("\nMenu de Opções:");
             System.out.println("1. Cadastrar um novo evento");
             System.out.println("2. Realizar a venda de um ingresso");
             System.out.println("3. Exibir informações do evento");
@@ -108,14 +108,11 @@ public class Menu {
                 System.out.println("Informe a duração em dias da exposição:");
                 int duracaoDiasExpo = scanner.nextInt();
 
-                System.out.println("Informe se há desconto social (true/false):");
-                boolean descontoSocialExpo = scanner.nextBoolean();
-
                 System.out.println("Informe o preço da exposição:");
                 double precoEventoExpo = scanner.nextDouble();
 
                 Exposicao exposicao = new Exposicao(nomeExpo, dataExpo, localExpo, ingressosInteiraExpo,
-                        ingressosMeiaExpo, faixaEtariaMinimaExpo, duracaoDiasExpo, descontoSocialExpo, precoEventoExpo);
+                        ingressosMeiaExpo, faixaEtariaMinimaExpo, duracaoDiasExpo, precoEventoExpo);
                 evento = exposicao;
                 break;
             case 2:
@@ -145,11 +142,8 @@ public class Menu {
                 System.out.println("Informe o preço do jogo:");
                 double precoEventoJogo = scanner.nextDouble();
 
-                System.out.println("Informe se há desconto torcedor (true/false):");
-                boolean descontoJogo = scanner.nextBoolean();
-
                 Jogo jogo = new Jogo(nomeJogo, dataJogo, localJogo, ingressosInteiraJogo, ingressosMeiaJogo,
-                        esporteJogo, equipesCompetindoJogo, precoEventoJogo, descontoJogo);
+                        esporteJogo, equipesCompetindoJogo, precoEventoJogo);
                 evento = jogo;
                 break;
             case 3:
@@ -177,12 +171,9 @@ public class Menu {
                 String generoMusicaShow = scanner.nextLine();
 
                 System.out.println("Informe o preço do evento:");
-                double precoEventoShow = scanner.nextDouble();
+                double precoEventoShow = scanner.nextDouble();              
 
-                System.out.println("Informe se é pista (true/false):");
-                boolean pistaShow = scanner.nextBoolean();                
-
-                Show show = new Show(nomeShow, dataShow, localShow, ingressosInteiraShow, ingressosMeiaShow, nomeArtistaShow, generoMusicaShow, pistaShow, precoEventoShow);
+                Show show = new Show(nomeShow, dataShow, localShow, ingressosInteiraShow, ingressosMeiaShow, nomeArtistaShow, generoMusicaShow, precoEventoShow);
                 evento = show; 
                 break;
             default:
@@ -197,74 +188,46 @@ public class Menu {
 
     private static void exibirInformacoesEvento(Evento evento) {
         if (evento != null) {
-            System.out.println("Informações do Evento:");
-    
-            System.out.println("Escolha o tipo de evento:");
-            System.out.println("1. Exposição");
-            System.out.println("2. Jogo");
-            System.out.println("3. Show");
-    
-            Scanner scanner = new Scanner(System.in);
-            int tipoEvento = scanner.nextInt();
-            scanner.nextLine();
-    
-            boolean eventoRegistrado = false; // Variável para verificar se algum evento do tipo escolhido foi registrado
-    
-            switch (tipoEvento) {
-                case 1: // Exposição
-                    if (evento instanceof Exposicao) {
-                        Exposicao exposicao = (Exposicao) evento;
-                        System.out.println("Nome do evento: " + evento.getNome());
-                        System.out.println("Data do evento: " + evento.getData());
-                        System.out.println("Local do evento: " + evento.getLocal());
-                        System.out.println("Tipo de evento: Exposição");
-                        System.out.println("Faixa Etária Mínima: " + exposicao.getFaixaEtariaMinima());
-                        System.out.println("Duração em dias: " + exposicao.getDuracaoDias());
-                        System.out.println("Preço da exposição: " + exposicao.getPrecoEvento());
-                        eventoRegistrado = true; // Um evento do tipo Exposição foi registrado
-                    }
-                    break;
-                case 2: // Jogo
-                    if (evento instanceof Jogo) {
-                        Jogo jogo = (Jogo) evento;
-                        System.out.println("Nome do evento: " + evento.getNome());
-                        System.out.println("Data do evento: " + evento.getData());
-                        System.out.println("Local do evento: " + evento.getLocal());
-                        System.out.println("Tipo de evento: Jogo");
-                        System.out.println("Esporte: " + jogo.getEsporte());
-                        System.out.println("Equipes Competindo: " + jogo.getEquipesCompetindo());
-                        System.out.println("Preço do jogo: " + jogo.getPrecoInteira());
-                        eventoRegistrado = true; // Um evento do tipo Jogo foi registrado
-                    }
-                    break;
-                case 3: // Show
-                    if (evento instanceof Show) {
-                        Show show = (Show) evento;
-                        System.out.println("Nome do evento: " + evento.getNome());
-                        System.out.println("Data do evento: " + evento.getData());
-                        System.out.println("Local do evento: " + evento.getLocal());
-                        System.out.println("Tipo de evento: Show");
-                        System.out.println("Nome do Artista: " + show.getNomeArtista());
-                        System.out.println("Gênero de Música: " + show.getGeneroMusica());
-                        System.out.println("Pista: " + (show.isPista() ? "Sim" : "Não"));
-                        System.out.println("Preço do show: " + show.getPrecoInteira());
-                        eventoRegistrado = true; // Um evento do tipo Show foi registrado
-                    }
-                    break;
-                default:
-                    System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
+            System.out.println("\nInformações do Evento:");
+                
+            if (evento instanceof Exposicao) {
+                Exposicao exposicao = (Exposicao) evento;
+                System.out.println("\nTipo de evento: Exposição");
+                System.out.println("Nome do evento: " + evento.getNome());
+                System.out.println("Data do evento: " + evento.getData());
+                System.out.println("Local do evento: " + evento.getLocal());
+                System.out.println("Faixa Etária Mínima: " + exposicao.getFaixaEtariaMinima());
+                System.out.println("Duração em dias: " + exposicao.getDuracaoDias());
+                System.out.println("Preço da exposição: " + exposicao.getPrecoEvento());
+            } else if (evento instanceof Jogo) {
+                Jogo jogo = (Jogo) evento;
+                System.out.println("\nTipo de evento: Jogo");
+                System.out.println("Nome do evento: " + evento.getNome());
+                System.out.println("Data do evento: " + evento.getData());
+                System.out.println("Local do evento: " + evento.getLocal());
+                System.out.println("Esporte: " + jogo.getEsporte());
+                System.out.println("Equipes Competindo: " + jogo.getEquipesCompetindo());
+                System.out.println("Preço do jogo: " + jogo.getPrecoInteira());
+            } else if (evento instanceof Show) {
+                Show show = (Show) evento;
+                System.out.println("\nTipo de evento: Show");
+                System.out.println("Nome do evento: " + evento.getNome());
+                System.out.println("Data do evento: " + evento.getData());
+                System.out.println("Local do evento: " + evento.getLocal());
+                System.out.println("Nome do Artista: " + show.getNomeArtista());
+                System.out.println("Gênero de Música: " + show.getGeneroMusica());
+                System.out.println("Preço do show: " + show.getPrecoInteira());
+            } else {
+                System.out.println("\nNenhum evento foi registrado.");
             }
-            if (!eventoRegistrado) {
-                System.out.println("Nenhum evento deste tipo foi registrado.");
-            }
-            scanner.nextInt();
         } else {
             System.out.println("Este evento não existe.");
         }
-    }
+        }        
     
 
     private static void exibirNumeroIngressosRestantes(Evento evento) {
+
     }
 
     private static void exibirInformacoesIngresso(Ingresso ingresso) {
