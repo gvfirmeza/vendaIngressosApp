@@ -4,13 +4,15 @@ public class Jogo extends Evento {
     private String esporte;
     private String equipesCompetindo;
     private double precoTotal;
+    private boolean torcedor;
     private double descontoTorcedor = 0.15;
 
-    public Jogo(String nome, String data, String local, int ingressosInteira, int ingressosMeia, String esporte, String equipesCompetindo, double precoTotal) {
+    public Jogo(String nome, String data, String local, int ingressosInteira, int ingressosMeia, String esporte, String equipesCompetindo, double precoTotal, boolean torcedor) {
         super(nome, data, local, ingressosInteira, ingressosMeia);
         this.esporte = esporte;
         this.equipesCompetindo = equipesCompetindo;
         this.precoTotal = precoTotal;
+        this.torcedor = torcedor;
     }
 
     public String getEsporte() {
@@ -37,23 +39,24 @@ public class Jogo extends Evento {
         this.precoTotal = precoTotal;
     }
 
-    public double getPrecoTorcedor() {
-        precoTotal = precoTotal - (precoTotal * descontoTorcedor);
-        return  precoTotal;
-    }
-
-    public double getPrecoTorcedorMeia() {
-        precoTotal = precoTotal - (precoTotal * descontoTorcedor);
-        return precoTotal / 2.0;
-    }
-
     @Override
     public double getPrecoInteira() {
-        return precoTotal;
+        if (torcedor == true){
+            precoTotal = precoTotal - (precoTotal * 0.15);
+            return precoTotal;
+        } else {
+            return precoTotal;
+        }
     }
 
     @Override
     public double getPrecoMeia() {
-        return precoTotal / 2.0;
+        if (torcedor == true){
+            precoTotal = precoTotal/2;
+            precoTotal = precoTotal - (precoTotal * 0.15);
+            return precoTotal;
+        } else {
+            return precoTotal / 2.0;
+        }
     }
 }
