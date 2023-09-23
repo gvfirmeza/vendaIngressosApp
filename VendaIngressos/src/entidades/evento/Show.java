@@ -39,12 +39,8 @@ public class Show extends Evento {
         this.pista = pista;
     }
 
-    public String isPista() {
-        if (pista == true) {
-            return "Pista!!!";
-        } else {
-            return "Camarote!!!";
-        }
+    public boolean isPista() {
+        return this.pista;
     }
 
     @Override
