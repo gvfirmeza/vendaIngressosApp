@@ -49,18 +49,18 @@ public class Exposicao extends Evento {
     @Override
     public double getPrecoInteira() {
         if (descontoSocial) {
-            return 0.0; // Ingresso com desconto social é gratuito
+            return 0.0;
         } else {
-            return precoEvento; // Preço do evento para inteira
+            return precoEvento;
         }
     }
 
     @Override
     public double getPrecoMeia() {
         if (descontoSocial) {
-            return 0.0; // Ingresso com desconto social é gratuito
+            return 0.0;
         } else {
-            return precoEvento / 2.0; // Metade do preço do evento para meia-entrada
+            return precoEvento / 2.0;
         }
     }
 }
