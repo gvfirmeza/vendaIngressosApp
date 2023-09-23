@@ -6,12 +6,11 @@ public class Jogo extends Evento {
     private double precoTotal;
     private boolean torcedor;
 
-    public Jogo(String nome, String data, String local, int ingressosInteira, int ingressosMeia, String esporte, String equipesCompetindo, double precoTotal, boolean torcedor) {
+    public Jogo(String nome, String data, String local, int ingressosInteira, int ingressosMeia, String esporte, String equipesCompetindo, double precoTotal) {
         super(nome, data, local, ingressosInteira, ingressosMeia);
         this.esporte = esporte;
         this.equipesCompetindo = equipesCompetindo;
         this.precoTotal = precoTotal;
-        this.torcedor = torcedor;
     }
 
     public String getEsporte() {
