@@ -29,10 +29,6 @@ public class Exposicao extends Evento {
         this.duracaoDias = duracaoDias;
     }
 
-    public void setDescontoSocial(boolean descontoSocial) {
-        this.descontoSocial = descontoSocial;
-    }
-
     public double getPrecoEvento() {
         return precoEvento;
     }
