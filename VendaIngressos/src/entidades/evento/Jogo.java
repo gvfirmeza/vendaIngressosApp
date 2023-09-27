@@ -4,7 +4,7 @@ public class Jogo extends Evento {
     private String esporte;
     private String equipesCompetindo;
     private double precoTotal;
-    private boolean torcedor;
+    public static boolean torcedor;
 
     public Jogo(String nome, String data, String local, int ingressosInteira, int ingressosMeia, String esporte, String equipesCompetindo, double precoTotal) {
         super(nome, data, local, ingressosInteira, ingressosMeia);

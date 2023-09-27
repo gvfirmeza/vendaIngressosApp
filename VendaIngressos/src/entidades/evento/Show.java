@@ -4,8 +4,8 @@ package entidades.evento;
 public class Show extends Evento {
     private String nomeArtista;
     private String generoMusica;
-    private boolean pista;
     private double precoTotal;
+    public static boolean pista;
 
     public Show(String nome, String data, String local, int ingressosInteira, int ingressosMeia, String nomeArtista, String generoMusica, double precoTotal) {
         super(nome, data, local, ingressosInteira, ingressosMeia);
@@ -28,14 +28,6 @@ public class Show extends Evento {
 
     public void setGeneroMusica(String generoMusica) {
         this.generoMusica = generoMusica;
-    }
-
-    public boolean getPista() {
-        return this.pista;
-    }
-
-    public void setPista(boolean pista) {
-        this.pista = pista;
     }
 
     @Override

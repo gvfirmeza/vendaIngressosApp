@@ -3,8 +3,8 @@ package entidades.evento;
 public class Exposicao extends Evento {
     private int faixaEtariaMinima;
     private int duracaoDias;
-    private boolean descontoSocial;
     private double precoEvento;
+    public static boolean descontoSocial = false;
 
     public Exposicao(String nome, String data, String local, int ingressosInteira, int ingressosMeia, int faixaEtariaMinima, int duracaoDias, double precoEvento) {
         super(nome, data, local, ingressosInteira, ingressosMeia);
@@ -27,14 +27,6 @@ public class Exposicao extends Evento {
 
     public void setDuracaoDias(int duracaoDias) {
         this.duracaoDias = duracaoDias;
-    }
-
-    public boolean isDescontoSocial() {
-        return descontoSocial;
-    }
-
-    public void setDescontoSocial(boolean descontoSocial) {
-        this.descontoSocial = descontoSocial;
     }
 
     public double getPrecoEvento() {

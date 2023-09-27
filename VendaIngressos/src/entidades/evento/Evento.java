@@ -1,7 +1,5 @@
 package entidades.evento;
 
-import entidades.ingresso.TipoIngresso;
-
 public abstract class Evento {
     private String nome;
     private String data;
@@ -57,28 +55,18 @@ public abstract class Evento {
         this.ingressosMeia = ingressosMeia;
     }
 
-    public boolean isIngressoDisponivel(TipoIngresso tipo, int quantidade) {
-        if (tipo == TipoIngresso.INTEIRA) {
-            return ingressosInteira >= quantidade;
-        } else {
-            return ingressosMeia >= quantidade;
+    public void venderIngressoInteira() {
+        if (ingressosInteira > 0) {
+            ingressosInteira--;
         }
     }
-
-    public double venderIngresso(TipoIngresso tipo, int quantidade) {
-        double valorTotal = 0.0;
-        if (isIngressoDisponivel(tipo, quantidade)) {
-            if (tipo == TipoIngresso.INTEIRA) {
-                ingressosInteira -= quantidade;
-                valorTotal = quantidade * getPrecoInteira();
-            } else {
-                ingressosMeia -= quantidade;
-                valorTotal = quantidade * getPrecoMeia();
-            }
+    
+    public void venderIngressoMeia() {
+        if (ingressosMeia > 0) {
+            ingressosMeia--;
         }
-        return valorTotal;
     }
-
+    
     // Métodos abstratos para obter os preços de ingressos inteiros e meia-entrada
     public abstract double getPrecoInteira();
 
