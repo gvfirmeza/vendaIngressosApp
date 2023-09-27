@@ -185,6 +185,34 @@ public class Menu {
     }
 
     private static Ingresso realizarVendaIngresso(Evento evento) {
+        boolean sair = false;
+        
+        while(sair == false) {
+            System.out.println("\nQual Ingresso Deseja Comprar?:");
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("1. Ingresso Inteira");
+            System.out.println("2. Ingresso Meia");
+            System.out.println("3. Sair");
+            int escolha = scanner.nextInt();
+            
+            switch(escolha) {
+                case 1:
+                    System.out.println(evento.getIngressosInteira);
+                    evento.getIngressosInteira = evento.getIngressosInteira - 1;
+                    System.out.println(evento.getIngressosInteira);
+                    break;
+                case 2:
+                    System.out.println(evento.getIngressosMeia);
+                    evento.getIngressosMeia = evento.getIngressosMeia - 1;
+                    System.out.println(evento.getIngressosMeia);
+                    break;
+                case 3:
+                    sair = true;
+                    break;
+                default:
+                    System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
+            }
+        }
         return null;
     }
 
