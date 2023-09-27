@@ -199,39 +199,41 @@ public class Menu {
                 case 1:
                     if(evento instanceof Exposicao) {
                         int desconto = scanner.nextInt();
-                        System.out.println("\nPossui Desconto Social?")
+                        System.out.println("\nPossui Desconto Social?");
                         System.out.println("1. Sim");
                         System.out.println("2. Não");
                         if (desconto == 1) {
-                            evento.descontoSocial = true;
+                            Exposicao.descontoSocial = true;
+                        } else {
+                            Exposicao.descontoSocial = false;
                         }
                     }
                     if(evento instanceof Jogo) {
                         int desconto = scanner.nextInt();
-                        System.out.println("\nPossui Desconto Torcedor?")
+                        System.out.println("\nPossui Desconto Torcedor?");
                         System.out.println("1. Sim");
                         System.out.println("2. Não");
                         if (desconto == 1) {
-                            evento.torcedor = true;
+                            Jogo.torcedor = true;
+                        } else {
+                            Jogo.torcedor = false;
                         }
                     }
                     if(evento instanceof Show) {
                         int desconto = scanner.nextInt();
-                        System.out.println("\nO Ingresso é Pista?")
+                        System.out.println("\nO Ingresso é Pista?");
                         System.out.println("1. Sim");
                         System.out.println("2. Não");
                         if (desconto == 1) {
-                            evento.pista = true;
+                            Show.pista = true;
+                        } else {
+                            Show.pista = false;
                         }
                     }
-                    System.out.println(evento.getIngressosInteira);
-                    evento.getIngressosInteira = evento.getIngressosInteira - 1;
-                    System.out.println(evento.getIngressosInteira);
+
                     break;
                 case 2:
-                    System.out.println(evento.getIngressosMeia);
-                    evento.getIngressosMeia = evento.getIngressosMeia - 1;
-                    System.out.println(evento.getIngressosMeia);
+
                     break;
                 case 3:
                     sair = true;
