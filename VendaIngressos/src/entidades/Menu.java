@@ -197,6 +197,33 @@ public class Menu {
             
             switch(escolha) {
                 case 1:
+                    if(evento instanceof Exposicao) {
+                        int desconto = scanner.nextInt();
+                        System.out.println("\nPossui Desconto Social?")
+                        System.out.println("1. Sim");
+                        System.out.println("2. Não");
+                        if (desconto == 1) {
+                            evento.descontoSocial = true;
+                        }
+                    }
+                    if(evento instanceof Jogo) {
+                        int desconto = scanner.nextInt();
+                        System.out.println("\nPossui Desconto Torcedor?")
+                        System.out.println("1. Sim");
+                        System.out.println("2. Não");
+                        if (desconto == 1) {
+                            evento.torcedor = true;
+                        }
+                    }
+                    if(evento instanceof Show) {
+                        int desconto = scanner.nextInt();
+                        System.out.println("\nO Ingresso é Pista?")
+                        System.out.println("1. Sim");
+                        System.out.println("2. Não");
+                        if (desconto == 1) {
+                            evento.pista = true;
+                        }
+                    }
                     System.out.println(evento.getIngressosInteira);
                     evento.getIngressosInteira = evento.getIngressosInteira - 1;
                     System.out.println(evento.getIngressosInteira);

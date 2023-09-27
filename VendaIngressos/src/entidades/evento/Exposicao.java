@@ -3,7 +3,7 @@ package entidades.evento;
 public class Exposicao extends Evento {
     private int faixaEtariaMinima;
     private int duracaoDias;
-    private boolean descontoSocial;
+    private boolean descontoSocial = false;
     private double precoEvento;
 
     public Exposicao(String nome, String data, String local, int ingressosInteira, int ingressosMeia, int faixaEtariaMinima, int duracaoDias, double precoEvento) {
