@@ -5,12 +5,10 @@ import entidades.evento.Evento;
 public abstract class Ingresso {
     
     private Evento evento;
-    private double precoCheio;
     private TipoIngresso tipo;
 
-     public Ingresso(Evento evento, double precoCheio, TipoIngresso tipo) {
+     public Ingresso(Evento evento, TipoIngresso tipo) {
         this.evento = evento;
-        this.precoCheio = precoCheio;
         this.tipo = tipo;
     }
 
@@ -20,14 +18,6 @@ public abstract class Ingresso {
 
     public void setEvento(Evento evento) {
         this.evento = evento;
-    }
-
-    public double getPrecoCheio() {
-        return precoCheio;
-    }
-
-    public void setPrecoCheio(double precoCheio) {
-        this.precoCheio = precoCheio;
     }
 
     public TipoIngresso getTipo() {

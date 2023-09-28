@@ -7,14 +7,16 @@ import entidades.evento.Exposicao;
 import entidades.evento.Jogo;
 import entidades.evento.Show;
 import entidades.ingresso.Ingresso;
+import entidades.ingresso.IngressoInteira;
+import entidades.ingresso.IngressoMeia;
 import entidades.ingresso.TipoIngresso;
 
 public class Menu {
+    private static Ingresso ultimoIngressoVendido = null;
 
     public static void metodoInterface() {
         Scanner scanner = new Scanner(System.in);
         Evento evento = null;
-        Ingresso ultimoIngressoVendido = null;
 
         while (true) {
             System.out.println("\nMenu de Opções:");
@@ -54,7 +56,11 @@ public class Menu {
                     }
                     break;
                 case 5:
-
+                    if (ultimoIngressoVendido != null) {
+                        exibirInformacoesIngresso(ultimoIngressoVendido);
+                    } else {
+                        System.out.println("Nenhum ingresso foi vendido ainda.");
+                    }
                     break;
                 case 6:
                     // Sair do programa
@@ -181,22 +187,22 @@ public class Menu {
         int totalMeias = 0;
         int totalInteiras = 0;
         double totalPreco = 0;
-        
-        while(sair == false) {
+
+        while (sair == false) {
             System.out.println("\nQual Ingresso Deseja Comprar?:");
             Scanner scanner = new Scanner(System.in);
             System.out.println("1. Ingresso Inteira");
             System.out.println("2. Ingresso Meia");
             System.out.println("3. Sair");
             int escolha = scanner.nextInt();
-            
-            switch(escolha) {
+
+            switch (escolha) {
                 case 1:
-                    if(evento.getIngressosInteira() > 0) {
+                    if (evento.getIngressosInteira() > 0) {
                         tipoIngresso = TipoIngresso.INTEIRA;
                         totalInteiras = totalInteiras + 1;
                         evento.venderIngressoInteira();
-                        if(evento instanceof Exposicao) {
+                        if (evento instanceof Exposicao) {
                             System.out.println("\nPossui Desconto Social?");
                             System.out.println("1. Sim");
                             System.out.println("2. Não");
@@ -207,7 +213,7 @@ public class Menu {
                                 Exposicao.descontoSocial = false;
                             }
                         }
-                        if(evento instanceof Jogo) {
+                        if (evento instanceof Jogo) {
                             System.out.println("\nPossui Desconto Torcedor?");
                             System.out.println("1. Sim");
                             System.out.println("2. Não");
@@ -218,7 +224,7 @@ public class Menu {
                                 Jogo.torcedor = false;
                             }
                         }
-                        if(evento instanceof Show) {
+                        if (evento instanceof Show) {
                             System.out.println("\nO Ingresso é Pista?");
                             System.out.println("1. Sim");
                             System.out.println("2. Não");
@@ -229,19 +235,23 @@ public class Menu {
                                 Show.pista = false;
                             }
                         }
+
+                        IngressoInteira ingresso = new IngressoInteira(evento, evento.getPrecoInteira());
+
                         System.out.println("O preço final foi de: R$ " + evento.getPrecoInteira());
                         totalPreco = totalPreco + evento.getPrecoInteira();
-                    } else {
-                        System.out.println("Esse ingresso foi esgotado.");
-                    }
 
+                        ultimoIngressoVendido = ingresso;
+                        return ultimoIngressoVendido;
+                    }
                     break;
+
                 case 2:
-                    if(evento.getIngressosMeia() > 0) {
+                    if (evento.getIngressosMeia() > 0) {
                         tipoIngresso = TipoIngresso.MEIA;
                         totalMeias = totalMeias + 1;
                         evento.venderIngressoMeia();
-                        if(evento instanceof Exposicao) {
+                        if (evento instanceof Exposicao) {
                             System.out.println("\nPossui Desconto Social?");
                             System.out.println("1. Sim");
                             System.out.println("2. Não");
@@ -252,7 +262,7 @@ public class Menu {
                                 Exposicao.descontoSocial = false;
                             }
                         }
-                        if(evento instanceof Jogo) {
+                        if (evento instanceof Jogo) {
                             System.out.println("\nPossui Desconto Torcedor?");
                             System.out.println("1. Sim");
                             System.out.println("2. Não");
@@ -263,7 +273,7 @@ public class Menu {
                                 Jogo.torcedor = false;
                             }
                         }
-                        if(evento instanceof Show) {
+                        if (evento instanceof Show) {
                             System.out.println("\nO Ingresso é Pista?");
                             System.out.println("1. Sim");
                             System.out.println("2. Não");
@@ -274,15 +284,21 @@ public class Menu {
                                 Show.pista = false;
                             }
                         }
+                        IngressoMeia ingresso = new IngressoMeia(evento, evento.getPrecoInteira());
+
                         System.out.println("O preço final foi de: R$ " + evento.getPrecoMeia());
                         totalPreco = totalPreco + evento.getPrecoMeia();
+
+                        ultimoIngressoVendido = ingresso;
+                        return ultimoIngressoVendido;
                     } else {
                         System.out.println("Esse ingresso foi esgotado.");
                     }
                     break;
                 case 3:
                     System.out.println("\nO total de ingresso comprados foram: ");
-                    System.out.println(totalMeias + " meias e " + totalInteiras + " inteiras. Totalizando " + totalPreco + " reais.");
+                    System.out.println(totalMeias + " meias e " + totalInteiras + " inteiras. Totalizando " + totalPreco
+                            + " reais.");
                     sair = true;
                     break;
                 default:
@@ -337,9 +353,11 @@ public class Menu {
 
             if (evento instanceof Exposicao) {
                 Exposicao exposicao = (Exposicao) evento;
-                int ingressosInteiraRestantes = exposicao.getIngressosInteira();;
-                int ingressosMeiaRestantes = exposicao.getIngressosMeia();;
-                
+                int ingressosInteiraRestantes = exposicao.getIngressosInteira();
+                ;
+                int ingressosMeiaRestantes = exposicao.getIngressosMeia();
+                ;
+
                 System.out.println("Ingressos Inteiros Restantes: " + ingressosInteiraRestantes);
                 System.out.println("Ingressos Meia Restantes: " + ingressosMeiaRestantes);
             } else if (evento instanceof Jogo) {
@@ -365,5 +383,18 @@ public class Menu {
     }
 
     private static void exibirInformacoesIngresso(Ingresso ingresso) {
+        Evento evento = ingresso.getEvento();
+        if (evento != null) {
+            System.out.println("Informações do Ingresso:");
+            System.out.println("Tipo de Ingresso: " + ingresso.getTipo());
+            System.out.println("Preço do Ingresso: R$ " + ingresso.getPreco());
+            System.out.println("Evento associado ao Ingresso:");
+            System.out.println("Nome do evento: " + evento.getNome());
+            System.out.println("Data do evento: " + evento.getData());
+            System.out.println("Local do evento: " + evento.getLocal());
+        } else {
+            System.out.println("O ingresso não está associado a nenhum evento.");
+        }
     }
+
 }
