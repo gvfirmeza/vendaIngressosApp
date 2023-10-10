@@ -41,8 +41,8 @@ public class Jogo extends Evento {
     @Override
     public double getPrecoInteira() {
         if (torcedor == true){
-            precoTotal = precoTotal * 0.85;
-            return precoTotal;
+            double precoInt = precoTotal * 0.85;
+            return precoInt;
         } else {
             return precoTotal;
         }
@@ -51,9 +51,9 @@ public class Jogo extends Evento {
     @Override
     public double getPrecoMeia() {
         if (torcedor == true){
-            precoTotal = precoTotal/2;
-            precoTotal = precoTotal * 0.85;
-            return precoTotal;
+            double precoMeia = precoTotal/2;
+            precoMeia = precoMeia * 0.85;
+            return precoMeia;
         } else {
             return precoTotal / 2.0;
         }
