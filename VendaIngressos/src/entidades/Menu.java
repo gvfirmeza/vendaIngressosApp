@@ -188,8 +188,9 @@ public class Menu {
         int totalMeias = 0;
         int totalInteiras = 0;
         double totalPreco = 0;
+        Ingresso ultimoIngressoVendido = null; // Inicialize aqui
 
-        while (sair == false) {
+        while (!sair) {
             System.out.println("\nQual Ingresso Deseja Comprar?:");
             Scanner scanner = new Scanner(System.in);
             System.out.println("1. Ingresso Inteira");
@@ -198,11 +199,11 @@ public class Menu {
             int escolha = scanner.nextInt();
 
             switch (escolha) {
-                case 1:                   
+                case 1:
                     if (evento.getIngressosInteira() > 0) {
                         Exposicao.tipoIngressoComprado = true;
                         tipoIngresso = TipoIngresso.INTEIRA;
-                        totalInteiras = totalInteiras + 1;                       
+                        totalInteiras = totalInteiras + 1;
                         evento.venderIngressoInteira();
                         if (evento instanceof Exposicao) {
                             System.out.println("\nPossui Desconto Social?");
@@ -246,15 +247,16 @@ public class Menu {
                         totalPreco = totalPreco + evento.getPrecoInteira();
 
                         ultimoIngressoVendido = ingresso;
-                        return ultimoIngressoVendido;
+                    } else {
+                        System.out.println("Esse ingresso foi esgotado.");
                     }
                     break;
 
-                case 2:                   
+                case 2:
                     if (evento.getIngressosMeia() > 0) {
                         Exposicao.tipoIngressoComprado = false;
                         tipoIngresso = TipoIngresso.MEIA;
-                        totalMeias = totalMeias + 1;                    
+                        totalMeias = totalMeias + 1;
                         evento.venderIngressoMeia();
                         if (evento instanceof Exposicao) {
                             System.out.println("\nPossui Desconto Social?");
@@ -297,22 +299,23 @@ public class Menu {
                         totalPreco = totalPreco + evento.getPrecoMeia();
 
                         ultimoIngressoVendido = ingresso;
-                        return ultimoIngressoVendido;
                     } else {
                         System.out.println("Esse ingresso foi esgotado.");
                     }
                     break;
+
                 case 3:
                     System.out.println("\nO total de ingresso comprados foram: ");
                     System.out.println(totalMeias + " meias e " + totalInteiras + " inteiras. Totalizando " + totalPreco
                             + " reais.");
                     sair = true;
                     break;
+
                 default:
                     System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
             }
         }
-        return null;
+        return ultimoIngressoVendido;
     }
 
     private static void exibirInformacoesEvento(Evento evento) {
