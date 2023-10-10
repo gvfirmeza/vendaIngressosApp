@@ -3,14 +3,15 @@ package entidades.evento;
 public class Exposicao extends Evento {
     private int faixaEtariaMinima;
     private int duracaoDias;
-    private double precoEvento;
+    private double precoTotal;
     public static boolean descontoSocial = false;
+    public static boolean tipoIngressoComprado = false;
 
-    public Exposicao(String nome, String data, String local, int ingressosInteira, int ingressosMeia, int faixaEtariaMinima, int duracaoDias, double precoEvento) {
+    public Exposicao(String nome, String data, String local, int ingressosInteira, int ingressosMeia, int faixaEtariaMinima, int duracaoDias, double precoTotal) {
         super(nome, data, local, ingressosInteira, ingressosMeia);
         this.faixaEtariaMinima = faixaEtariaMinima;
         this.duracaoDias = duracaoDias;
-        this.precoEvento = precoEvento;
+        this.precoTotal = precoTotal;
     }
 
     public int getFaixaEtariaMinima() {
@@ -30,11 +31,11 @@ public class Exposicao extends Evento {
     }
 
     public double getPrecoEvento() {
-        return precoEvento;
+        return precoTotal;
     }
 
     public void setPrecoEvento(double precoEvento) {
-        this.precoEvento = precoEvento;
+        this.precoTotal = precoEvento;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class Exposicao extends Evento {
         if (descontoSocial) {
             return 0.0;
         } else {
-            return precoEvento;
+            return precoTotal;
         }
     }
 
@@ -51,8 +52,16 @@ public class Exposicao extends Evento {
         if (descontoSocial) {
             return 0.0;
         } else {
-            return precoEvento / 2.0;
+            return precoTotal / 2.0;
+        }
+    }
+
+    @Override
+    public double getPrecoPago() {
+        if (tipoIngressoComprado) {
+        return getPrecoInteira();
+        } else {
+            return getPrecoMeia();
         }
     }
 }
-

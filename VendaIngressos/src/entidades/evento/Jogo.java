@@ -5,6 +5,7 @@ public class Jogo extends Evento {
     private String equipesCompetindo;
     private double precoTotal;
     public static boolean torcedor;
+    public static boolean tipoIngressoComprado = false;
 
     public Jogo(String nome, String data, String local, int ingressosInteira, int ingressosMeia, String esporte, String equipesCompetindo, double precoTotal) {
         super(nome, data, local, ingressosInteira, ingressosMeia);
@@ -40,7 +41,7 @@ public class Jogo extends Evento {
     @Override
     public double getPrecoInteira() {
         if (torcedor == true){
-            precoTotal = precoTotal - (precoTotal * 0.15);
+            precoTotal = precoTotal * 0.85;
             return precoTotal;
         } else {
             return precoTotal;
@@ -51,10 +52,19 @@ public class Jogo extends Evento {
     public double getPrecoMeia() {
         if (torcedor == true){
             precoTotal = precoTotal/2;
-            precoTotal = precoTotal - (precoTotal * 0.15);
+            precoTotal = precoTotal * 0.85;
             return precoTotal;
         } else {
             return precoTotal / 2.0;
+        }
+    }
+
+    @Override
+    public double getPrecoPago() {
+        if (tipoIngressoComprado) {
+        return getPrecoInteira();
+        } else {
+            return getPrecoMeia();
         }
     }
 }

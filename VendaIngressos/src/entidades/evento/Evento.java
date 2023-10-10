@@ -6,6 +6,7 @@ public abstract class Evento {
     private String local;
     private int ingressosInteira;
     private int ingressosMeia;
+    public boolean tipoIngressoComprado;
 
     public Evento(String nome, String data, String local, int ingressosInteira, int ingressosMeia) {
         this.nome = nome;
@@ -71,4 +72,6 @@ public abstract class Evento {
     public abstract double getPrecoInteira();
 
     public abstract double getPrecoMeia();
+
+    public abstract double getPrecoPago();
 }

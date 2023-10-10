@@ -163,6 +163,7 @@ public class Menu {
                 int ingressosMeiaShow = scanner.nextInt();
 
                 System.out.println("Informe o nome do artista:");
+                scanner.nextLine();
                 String nomeArtistaShow = scanner.nextLine();
 
                 System.out.println("Informe o genero de musica:");
@@ -197,10 +198,11 @@ public class Menu {
             int escolha = scanner.nextInt();
 
             switch (escolha) {
-                case 1:
+                case 1:                   
                     if (evento.getIngressosInteira() > 0) {
+                        Exposicao.tipoIngressoComprado = true;
                         tipoIngresso = TipoIngresso.INTEIRA;
-                        totalInteiras = totalInteiras + 1;
+                        totalInteiras = totalInteiras + 1;                       
                         evento.venderIngressoInteira();
                         if (evento instanceof Exposicao) {
                             System.out.println("\nPossui Desconto Social?");
@@ -214,6 +216,7 @@ public class Menu {
                             }
                         }
                         if (evento instanceof Jogo) {
+                            Jogo.tipoIngressoComprado = true;
                             System.out.println("\nPossui Desconto Torcedor?");
                             System.out.println("1. Sim");
                             System.out.println("2. Não");
@@ -225,6 +228,7 @@ public class Menu {
                             }
                         }
                         if (evento instanceof Show) {
+                            Show.tipoIngressoComprado = true;
                             System.out.println("\nO Ingresso é Pista?");
                             System.out.println("1. Sim");
                             System.out.println("2. Não");
@@ -246,10 +250,11 @@ public class Menu {
                     }
                     break;
 
-                case 2:
+                case 2:                   
                     if (evento.getIngressosMeia() > 0) {
+                        Exposicao.tipoIngressoComprado = false;
                         tipoIngresso = TipoIngresso.MEIA;
-                        totalMeias = totalMeias + 1;
+                        totalMeias = totalMeias + 1;                    
                         evento.venderIngressoMeia();
                         if (evento instanceof Exposicao) {
                             System.out.println("\nPossui Desconto Social?");
@@ -263,6 +268,7 @@ public class Menu {
                             }
                         }
                         if (evento instanceof Jogo) {
+                            Jogo.tipoIngressoComprado = false;
                             System.out.println("\nPossui Desconto Torcedor?");
                             System.out.println("1. Sim");
                             System.out.println("2. Não");
@@ -274,6 +280,7 @@ public class Menu {
                             }
                         }
                         if (evento instanceof Show) {
+                            Show.tipoIngressoComprado = false;
                             System.out.println("\nO Ingresso é Pista?");
                             System.out.println("1. Sim");
                             System.out.println("2. Não");
@@ -387,7 +394,7 @@ public class Menu {
         if (evento != null) {
             System.out.println("Informações do Ingresso:");
             System.out.println("Tipo de Ingresso: " + ingresso.getTipo());
-            System.out.println("Preço do Ingresso: R$ " + ingresso.getPreco());
+            System.out.println("Preço do Ingresso: R$ " + evento.getPrecoPago());
             System.out.println("Evento associado ao Ingresso:");
             System.out.println("Nome do evento: " + evento.getNome());
             System.out.println("Data do evento: " + evento.getData());
