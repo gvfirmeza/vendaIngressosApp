@@ -1,16 +1,17 @@
 package entidades.evento;
 
 import entidades.ingresso.TipoIngresso;
+import java.time.LocalDate; // Importa a classe LocalDate
 
 public abstract class Evento {
     private String nome;
-    private String data;
+    private LocalDate data; // Altera a variável para LocalDate
     private String local;
     private int ingressosMeia;
     private int ingressosInteira;
     private double precoCheio;
 
-    public Evento(String nome, String data, String local, int ingressosMeia, int ingressosInteira, double precoCheio) {
+    public Evento(String nome, LocalDate data, String local, int ingressosMeia, int ingressosInteira, double precoCheio) {
         this.nome = nome;
         this.data = data;
         this.local = local;
