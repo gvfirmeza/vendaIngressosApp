@@ -12,6 +12,14 @@ public class Exposicao extends Evento {
         this.duracaoDias = duracaoDias;
     }
 
+    public int getFaixaEtariaMinima() {
+        return faixaEtariaMinima;
+    }
+
+    public int getDuracaoDias() {
+        return duracaoDias;
+    }
+
     @Override
     public String toString() {
         return super.toString() + "\nIdade mínima: " + this.faixaEtariaMinima + "\nDuração: " + this.duracaoDias + " dias";

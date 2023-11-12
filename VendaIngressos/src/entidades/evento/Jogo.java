@@ -12,6 +12,18 @@ public class Jogo extends Evento {
         this.equipeCasa = equipeCasa;
     }
 
+    public String getEsporte() {
+        return esporte;
+    }
+
+    public String getEquipeCasa() {
+        return equipeCasa;
+    }
+
+    public String getEquipeAdversaria() {
+        return equipeAdversaria;
+    }
+
     @Override
     public String toString() {
         return super.toString() + "\n" + this.esporte + " - " + this.equipeCasa + " x " + this.equipeAdversaria;
