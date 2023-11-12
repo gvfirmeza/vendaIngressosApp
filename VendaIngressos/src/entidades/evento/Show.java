@@ -11,6 +11,14 @@ public class Show extends Evento {
         this.genero = genero;
     }
 
+    public String getArtista() {
+        return artista;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
     @Override
     public String toString() {
         return super.toString() + "\n" + this.artista + " - " + this.genero;

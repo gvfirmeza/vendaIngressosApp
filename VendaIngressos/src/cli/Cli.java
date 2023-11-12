@@ -1,28 +1,28 @@
 package cli;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+import dao.EventoDAO;
 import entidades.evento.Evento;
 import entidades.evento.Exposicao;
 import entidades.evento.Jogo;
 import entidades.evento.Show;
 
-import entidades.ingresso.Ingresso;
-import entidades.ingresso.TipoIngresso;
-import entidades.ingresso.IngExposicao;
-import entidades.ingresso.IngJogo;
-import entidades.ingresso.IngShow;
-
 public class Cli {
-    public static void main(String[] args) {
-        executar();
-    }
+    private static EventoDAO eventoDAO = new EventoDAO();
+    private static Scanner leitor = new Scanner(System.in);
 
     public static void executar() {
+        
+        carregarEventos(eventoDAO, "eventos.txt"); // Carrega os eventos no início
+        
         Evento evento = null;
-        Ingresso ingresso = null;
-        Scanner leitor = new Scanner(System.in);
         int opcao;
 
         System.out.println("Seja bem-vindo ao programa de venda de ingressos de eventos!");
@@ -32,172 +32,187 @@ public class Cli {
             opcao = leitor.nextInt();
             switch (opcao) {
                 case 1:
-                    evento = cadastrarEvento(leitor);
-                    System.out.println("Evento cadastrado com sucesso!");
+                    evento = cadastrarEvento();
                     break;
                 case 2:
-                    exibirEvento(evento);
+                    exibirEvento();
                     break;
                 case 3:
-                    exibirIngressosRestantes(evento);
+                    listarTodosEventos();
                     break;
                 case 11:
-                    ingresso = venderIngresso(evento, leitor);
+                    venderIngresso(evento);
                     break;
                 default:
                     leitor.close();
                     System.out.println("Volte sempre!");
+                    salvarEventos(eventoDAO, "eventos.txt");
                     return;
             }
         }
     }
 
-    private static void menu() {
-        System.out.println("\nDigite a opção desejada ou qualquer outro valor para sair:");
-        System.out.println("1 - Cadastrar um novo evento;");
-        System.out.println("2 - Exibir evento cadastrado;");
-        System.out.println("3 - Exibir ingressos restantes;");
-        System.out.println("11 - Vender um ingresso;");
+    public static void menu() {
+        System.out.println("\nEscolha uma opção:");
+        System.out.println("1 - Cadastrar Evento");
+        System.out.println("2 - Exibir Evento");
+        System.out.println("3 - Listar Todos os Eventos");
+        System.out.println("11 - Vender Ingresso");
+        System.out.println("0 - Sair");
     }
 
-    private static void exibirIngressosRestantes(Evento evento) {
-        if (evento == null) {
-            System.out.println("Evento ainda não foi cadastrado!");
-        } else {
-            System.out.println("Ingressos restantes: " + evento.getIngressos());
-        }
-    }
+    public static Evento cadastrarEvento() {
+        System.out.println("Escolha o tipo de evento:");
+        System.out.println("1 - Exposição");
+        System.out.println("2 - Jogo");
+        System.out.println("3 - Show");
+        int tipoEvento = leitor.nextInt();
 
-    private static void exibirEvento(Evento evento) {
-        if (evento == null) {
-            System.out.println("Evento ainda não foi cadastrado!");
-        } else {
-            System.out.println(evento);
-        }
-    }
-
-    private static Evento cadastrarEvento(Scanner leitor) {
-        String nome, local, tipo;
-        int ingMeia, ingInteira;
-        double preco;
-        LocalDate data;
-
-        System.out.print("Informe o nome do evento: ");
-        nome = leitor.next();
-
-        System.out.print("Informe a data do evento no formato 'DD/MM/AAAA': ");
+        System.out.print("Digite o nome do evento: ");
+        String nome = leitor.next();
+        System.out.print("Digite a data do evento (formato YYYY-MM-DD): ");
         String dataString = leitor.next();
-        String[] partesData = dataString.split("/");
-        int dia = Integer.parseInt(partesData[0]);
-        int mes = Integer.parseInt(partesData[1]);
-        int ano = Integer.parseInt(partesData[2]);
-        data = LocalDate.of(ano, mes, dia);
+        LocalDate data = LocalDate.parse(dataString);
+        System.out.print("Digite o local do evento: ");
+        String local = leitor.next();
+        System.out.print("Digite a quantidade de ingressos meia: ");
+        int ingressosMeia = leitor.nextInt();
+        System.out.print("Digite a quantidade de ingressos inteira: ");
+        int ingressosInteira = leitor.nextInt();
+        System.out.print("Digite o preço cheio do ingresso: ");
+        double precoCheio = leitor.nextDouble();
 
-        System.out.print("Informe o local do evento: ");
-        local = leitor.next();
+        Evento evento = null;
 
-        System.out.print("Informe o número de entradas tipo meia: ");
-        ingMeia = leitor.nextInt();
-
-        System.out.print("Informe o número de entradas tipo inteira: ");
-        ingInteira = leitor.nextInt();
-
-        System.out.print("Informe o preço cheio do evento: ");
-        preco = leitor.nextDouble();
-
-        System.out.print("Informe o tipo do evento (show, jogo ou exposição): ");
-        tipo = leitor.next();
-
-        if (tipo.equals("show")) {
-            String artista, genero;
-
-            System.out.print("Informe o nome do artista: ");
-            artista = leitor.next();
-            System.out.print("Informe o gênero do show: ");
-            genero = leitor.next();
-
-            return new Show(nome, data, local, ingMeia, ingInteira, preco, artista, genero);
+        switch (tipoEvento) {
+            case 1:
+                System.out.print("Digite a faixa etária mínima da exposição: ");
+                int faixaEtariaMinima = leitor.nextInt();
+                System.out.print("Digite a duração em dias da exposição: ");
+                int duracaoDias = leitor.nextInt();
+                evento = new Exposicao(nome, data, local, ingressosMeia, ingressosInteira, precoCheio, faixaEtariaMinima, duracaoDias);
+                break;
+            case 2:
+                System.out.print("Digite o esporte do jogo: ");
+                String esporte = leitor.next();
+                System.out.print("Digite a equipe da casa: ");
+                String equipeCasa = leitor.next();
+                System.out.print("Digite a equipe adversária: ");
+                String equipeAdversaria = leitor.next();
+                evento = new Jogo(nome, data, local, ingressosMeia, ingressosInteira, precoCheio, esporte, equipeCasa, equipeAdversaria);
+                break;
+            case 3:
+                System.out.print("Digite o nome do artista do show: ");
+                String artista = leitor.next();
+                System.out.print("Digite o gênero musical do show: ");
+                String genero = leitor.next();
+                evento = new Show(nome, data, local, ingressosMeia, ingressosInteira, precoCheio, artista, genero);
+                break;
+            default:
+                System.out.println("Opção inválida.");
         }
 
-        if (tipo.equals("jogo")) {
-            String esporte, casa, adversario;
-
-            System.out.print("Informe o esporte: ");
-            esporte = leitor.next();
-            System.out.print("Informe a equipe da casa: ");
-            casa = leitor.next();
-            System.out.print("Informe a equipe adversária: ");
-            adversario = leitor.next();
-
-            return new Jogo(nome, data, local, ingMeia, ingInteira, preco, esporte, casa, adversario);
+        if (evento != null) {
+            String mensagem = eventoDAO.adicionarEvento(evento);
+            System.out.println(mensagem);
         }
 
-        int idadeMin, duracao;
-
-        System.out.print("Informe a idade mínima para entrar na exposição: ");
-        idadeMin = leitor.nextInt();
-        System.out.print("Informe a duração em dias da exposição: ");
-        duracao = leitor.nextInt();
-
-        return new Exposicao(nome, data, local, ingMeia, ingInteira, preco, idadeMin, duracao);
+        return evento;
     }
 
-    private static Ingresso venderIngresso(Evento evento, Scanner leitor) {
-        if (evento == null) {
-            System.out.println("Evento ainda não foi cadastrado!");
-            return null;
-        }
+    public static void exibirEvento() {
+        System.out.print("Digite o nome do evento: ");
+        String nome = leitor.next();
 
-        String tipo;
-        TipoIngresso tipoIngresso;
-        int quantidade;
-        Ingresso ingresso;
+        Evento eventoEncontrado = eventoDAO.buscarEventoPorNome(nome);
 
-        System.out.print("Informe o tipo do ingresso (meia ou inteira): ");
-        tipo = leitor.next();
-        if (!(tipo.equals("meia") || tipo.equals("inteira"))) {
-            System.out.println("Tipo selecionado inválido!");
-            return null;
-        }
-
-        tipoIngresso = tipo.equals("meia") ? TipoIngresso.MEIA : TipoIngresso.INTEIRA;
-
-        System.out.print("Informe quantos ingressos você deseja: ");
-        quantidade = leitor.nextInt();
-
-        if (!evento.isIngressoDisponivel(tipoIngresso, quantidade)) {
-            System.out.println("Não há ingressos disponíveis desse tipo!");
-            return null;
-        }
-
-        if (evento instanceof Jogo) {
-            int percentual;
-
-            System.out.print("Informe o percentual do desconto de sócio torcedor: ");
-            percentual = leitor.nextInt();
-            ingresso = new IngJogo(evento, tipoIngresso, percentual);
-        } else if (evento instanceof Show) {
-            String localizacao;
-
-            System.out.print("Informe a localização do ingresso (pista ou camarote): ");
-            localizacao = leitor.next();
-
-            if (!(localizacao.equals("pista") || localizacao.equals("camarote"))) {
-                System.out.println("Localização inválida!");
-                return null;
-            }
-            ingresso = new IngShow(evento, tipoIngresso, localizacao);
+        if (eventoEncontrado != null) {
+            System.out.println(eventoEncontrado);
         } else {
-            String desconto;
-
-            System.out.print("Informe se possui desconto social (s/n): ");
-            desconto = leitor.next();
-
-            ingresso = new IngExposicao(evento, tipoIngresso, desconto.equals("s"));
+            System.out.println("Erro: Evento não encontrado.");
         }
-
-        evento.venderIngresso(tipoIngresso, quantidade);
-        System.out.println("Ingresso vendido com sucesso!");
-        return ingresso;
     }
+
+    public static void listarTodosEventos() {
+        String resultado = eventoDAO.listarTodosEventos();
+        System.out.println(resultado);
+    }
+
+    public static void venderIngresso(Evento evento) {
+        // Implemente a lógica para vender um ingresso
+        // ...
+    }
+
+    public static void carregarEventos(EventoDAO eventoDAO, String fileName) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                String tipoEvento = values[0];
+                String nome = values[1];
+                LocalDate data = LocalDate.parse(values[2]); // Assumindo que a data está no formato padrão ISO
+                String local = values[3];
+                int ingressosMeia = Integer.parseInt(values[4]);
+                int ingressosInteira = Integer.parseInt(values[5]);
+                double precoCheio = Double.parseDouble(values[6]);
+
+                switch (tipoEvento) {
+                    case "Exposicao":
+                        int faixaEtariaMinima = Integer.parseInt(values[7]);
+                        int duracaoDias = Integer.parseInt(values[8]);
+                        eventoDAO.adicionarEvento(new Exposicao(nome, data, local, ingressosMeia, ingressosInteira, precoCheio, faixaEtariaMinima, duracaoDias));
+                        break;
+                    case "Jogo":
+                        String esporte = values[7];
+                        String equipeCasa = values[8];
+                        String equipeAdversaria = values[9];
+                        eventoDAO.adicionarEvento(new Jogo(nome, data, local, ingressosMeia, ingressosInteira, precoCheio, esporte, equipeCasa, equipeAdversaria));
+                        break;
+                    case "Show":
+                        String artista = values[7];
+                        String genero = values[8];
+                        eventoDAO.adicionarEvento(new Show(nome, data, local, ingressosMeia, ingressosInteira, precoCheio, artista, genero));
+                        break;
+                    default:
+                        System.out.println("Tipo de evento desconhecido: " + tipoEvento);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void salvarEventos(EventoDAO eventoDAO, String fileName) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
+            for (Evento evento : eventoDAO.getEventos().values()) {
+                bw.write(evento.getClass().getSimpleName() + ",");
+                bw.write(evento.getNome() + ",");
+                bw.write(evento.getData().toString() + ",");
+                bw.write(evento.getLocal() + ",");
+                bw.write(evento.getIngressosMeia() + ",");
+                bw.write(evento.getIngressosInteira() + ",");
+                bw.write(evento.getPrecoCheio() + ",");
+    
+                if (evento instanceof Exposicao) {
+                    Exposicao exposicao = (Exposicao) evento;
+                    bw.write(exposicao.getFaixaEtariaMinima() + ",");
+                    bw.write(exposicao.getDuracaoDias() + ",");
+                } else if (evento instanceof Jogo) {
+                    Jogo jogo = (Jogo) evento;
+                    bw.write(jogo.getEsporte() + ",");
+                    bw.write(jogo.getEquipeCasa() + ",");
+                    bw.write(jogo.getEquipeAdversaria() + ",");
+                } else if (evento instanceof Show) {
+                    Show show = (Show) evento;
+                    bw.write(show.getArtista() + ",");
+                    bw.write(show.getGenero() + ",");
+                }
+    
+                bw.write("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }    
 }
+
