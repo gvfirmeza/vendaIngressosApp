@@ -1,3 +1,2 @@
-Exposicao,Expo,2023-12-01,Museu,50,100,20.0,16,7
-Jogo,Futebol Derby,2023-12-15,Estádio,30,50,40.0,Futebol,CasaTime,AdversarioTime
-Show,Show,2023-11-25,Arena,20,40,60.0,ArtistaFamoso,Rock
+Exposicao,Expo,2023-12-01,Museu,50,100,20.0,16,7,
+Show,Show,2023-11-25,Arena,20,40,60.0,ArtistaFamoso,Rock,

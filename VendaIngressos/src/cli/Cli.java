@@ -20,7 +20,7 @@ public class Cli {
 
     public static void executar() {
         
-        carregarEventos(eventoDAO, "eventos.txt"); // Carrega os eventos no início
+        carregarEventos(eventoDAO, "eventos.txt");
         
         Evento evento = null;
         int opcao;
@@ -40,7 +40,10 @@ public class Cli {
                 case 3:
                     listarTodosEventos();
                     break;
-                case 11:
+                case 4:
+                    removerEvento();
+                    break;
+                case 5:
                     venderIngresso(evento);
                     break;
                 default:
@@ -57,7 +60,8 @@ public class Cli {
         System.out.println("1 - Cadastrar Evento");
         System.out.println("2 - Exibir Evento");
         System.out.println("3 - Listar Todos os Eventos");
-        System.out.println("11 - Vender Ingresso");
+        System.out.println("4 - Remover Evento");
+        System.out.println("5 - Vender Ingresso");
         System.out.println("0 - Sair");
     }
 
@@ -138,9 +142,15 @@ public class Cli {
         System.out.println(resultado);
     }
 
+    public static void removerEvento() {
+        System.out.print("Digite o nome do evento: ");
+        String nome = leitor.next();
+        String resultado = eventoDAO.removerEvento(nome);
+        System.out.println(resultado);
+    }
+
     public static void venderIngresso(Evento evento) {
-        // Implemente a lógica para vender um ingresso
-        // ...
+
     }
 
     public static void carregarEventos(EventoDAO eventoDAO, String fileName) {
@@ -150,7 +160,7 @@ public class Cli {
                 String[] values = line.split(",");
                 String tipoEvento = values[0];
                 String nome = values[1];
-                LocalDate data = LocalDate.parse(values[2]); // Assumindo que a data está no formato padrão ISO
+                LocalDate data = LocalDate.parse(values[2]); // Assumindo que a data está no formato padrão ISO (n tirem esse coment, temo q ver se isso ta certo)
                 String local = values[3];
                 int ingressosMeia = Integer.parseInt(values[4]);
                 int ingressosInteira = Integer.parseInt(values[5]);

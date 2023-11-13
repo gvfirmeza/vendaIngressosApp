@@ -68,6 +68,6 @@ public abstract class Evento {
 
     @Override
     public String toString() {
-        return this.nome + " - " + this.data + " - " + this.local;
+        return "\n" + this.nome + " - " + this.data + " - " + this.local;
     }
 }

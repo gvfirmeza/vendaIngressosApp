@@ -38,7 +38,7 @@ public class EventoDAO {
     public Evento buscarEventoPorNome(String nome) {
         Evento evento = eventos.get(nome);
         if (evento == null) {
-            return null; // Indica que o evento não foi encontrado
+            return null;
         }
         return evento;
     }
