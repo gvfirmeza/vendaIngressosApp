@@ -1,11 +1,11 @@
 package entidades.evento;
 
 import entidades.ingresso.TipoIngresso;
-import java.time.LocalDate; // Importa a classe LocalDate
+import java.time.LocalDate;
 
 public abstract class Evento {
     private String nome;
-    private LocalDate data; // Altera a variável para LocalDate
+    private LocalDate data;
     private String local;
     private int ingressosMeia;
     private int ingressosInteira;
@@ -32,6 +32,22 @@ public abstract class Evento {
         return this.ingressosInteira + this.ingressosMeia;
     }
 
+    public int getIngressosMeia() {
+        return this.ingressosMeia;
+    }
+
+    public int getIngressosInteira() {
+        return this.ingressosInteira;
+    }
+
+    public LocalDate getData() {
+        return this.data;
+    }
+
+    public String getLocal() {
+        return this.local;
+    }
+
     public boolean isIngressoDisponivel(TipoIngresso tipo, int quantidade) {
         if (tipo.equals(TipoIngresso.MEIA)) {
             return quantidade <= this.ingressosMeia;
@@ -52,6 +68,6 @@ public abstract class Evento {
 
     @Override
     public String toString() {
-        return this.nome + " - " + this.data + " - " + this.local;
+        return "\n" + this.nome + " - " + this.data + " - " + this.local;
     }
 }
