@@ -20,22 +20,6 @@ public class Exposicao extends Evento {
         return duracaoDias;
     }
 
-    public int getIngressosVendidosMeia() {
-        return 0;
-    }
-    
-    public int getIngressosVendidosInteira() {
-        return 0;
-    }
-
-    public int getIngressosMeiaRestantes() {
-        return getIngressosMeia() - getIngressosVendidosMeia();
-    }
-    
-    public int getIngressosInteiraRestantes() {
-        return getIngressosInteira() - getIngressosVendidosInteira();
-    }
-
     @Override
     public String toString() {
         return super.toString() + "\nIdade mínima: " + this.faixaEtariaMinima + "\nDuração: " + this.duracaoDias + " dias";
