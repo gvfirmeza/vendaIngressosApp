@@ -145,7 +145,7 @@ public class Cli {
     System.out.print("Digite o nome do evento: ");
     String nome = leitor.next();
 
-    Evento eventoEncontrado = eventoDAO.buscarEventoPorNome(nome);
+    Evento eventoEncontrado = eventoDAO.qtdIngresso(nome);
 
     if (eventoEncontrado != null) {
 
