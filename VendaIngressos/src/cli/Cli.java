@@ -46,6 +46,9 @@ public class Cli {
                 case 5:
                     venderIngresso(evento);
                     break;
+                case 6:
+                    qtdIngresso();
+                    break;
                 default:
                     leitor.close();
                     System.out.println("Volte sempre!");
@@ -62,6 +65,7 @@ public class Cli {
         System.out.println("3 - Listar Todos os Eventos");
         System.out.println("4 - Remover Evento");
         System.out.println("5 - Vender Ingresso");
+        System.out.println("6 - Ingressos Restantes");
         System.out.println("0 - Sair");
     }
 
@@ -136,6 +140,33 @@ public class Cli {
             System.out.println("Erro: Evento não encontrado.");
         }
     }
+
+    public static void qtdIngresso() {
+    System.out.print("Digite o nome do evento: ");
+    String nome = leitor.next();
+
+    Evento eventoEncontrado = eventoDAO.buscarEventoPorNome(nome);
+
+    if (eventoEncontrado != null) {
+
+        if (eventoEncontrado instanceof Exposicao) {
+            Exposicao exposicao = (Exposicao) eventoEncontrado;
+            System.out.println("Ingressos Meia Restantes: " + exposicao.getIngressosMeiaRestantes());
+            System.out.println("Ingressos Inteira Restantes: " + exposicao.getIngressosInteiraRestantes());
+        } else if (eventoEncontrado instanceof Jogo) {
+            Jogo jogo = (Jogo) eventoEncontrado;
+            System.out.println("Ingressos Meia Restantes: " + jogo.getIngressosMeiaRestantes());
+            System.out.println("Ingressos Inteira Restantes: " + jogo.getIngressosInteiraRestantes());
+        } else if (eventoEncontrado instanceof Show) {
+            Show show = (Show) eventoEncontrado;
+            System.out.println("Ingressos Meia Restantes: " + show.getIngressosMeiaRestantes());
+            System.out.println("Ingressos Inteira Restantes: " + show.getIngressosInteiraRestantes());
+        }
+    } else {
+        System.out.println("Erro: Evento não encontrado.");
+    }
+}
+
 
     public static void listarTodosEventos() {
         String resultado = eventoDAO.listarTodosEventos();

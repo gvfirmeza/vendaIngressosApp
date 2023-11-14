@@ -54,4 +54,12 @@ public class EventoDAO {
             return result.toString();
         }
     }
+
+        public Evento qtdIngresso(String nome) {
+        Evento evento = eventos.get(nome);
+        if (evento == null) {
+            return null;
+        }
+        return evento;
+    }
 }

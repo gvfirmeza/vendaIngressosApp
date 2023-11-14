@@ -24,6 +24,23 @@ public class Jogo extends Evento {
         return equipeAdversaria;
     }
 
+    public int getIngressosVendidosMeia() {
+        return 0;
+    }
+    
+    public int getIngressosVendidosInteira() {
+        return 0;
+    }
+    
+
+    public int getIngressosMeiaRestantes() {
+        return getIngressosMeia() - getIngressosVendidosMeia();
+    }
+
+    public int getIngressosInteiraRestantes() {
+        return getIngressosInteira() - getIngressosVendidosInteira();
+    }
+
     @Override
     public String toString() {
         return super.toString() + "\n" + this.esporte + " - " + this.equipeCasa + " x " + this.equipeAdversaria;
