@@ -127,15 +127,30 @@ public class Cli {
     public static void exibirEvento() {
         System.out.print("Digite o nome do evento: ");
         String nome = leitor.next();
-
+    
         Evento eventoEncontrado = eventoDAO.buscarEventoPorNome(nome);
-
+    
         if (eventoEncontrado != null) {
             System.out.println(eventoEncontrado);
+    
+            if (eventoEncontrado instanceof Exposicao) {
+                Exposicao exposicao = (Exposicao) eventoEncontrado;
+                System.out.println("Ingressos Meia Restantes: " + exposicao.getIngressosMeiaRestantes());
+                System.out.println("Ingressos Inteira Restantes: " + exposicao.getIngressosInteiraRestantes());
+            } else if (eventoEncontrado instanceof Jogo) {
+                Jogo jogo = (Jogo) eventoEncontrado;
+                System.out.println("Ingressos Meia Restantes: " + jogo.getIngressosMeiaRestantes());
+                System.out.println("Ingressos Inteira Restantes: " + jogo.getIngressosInteiraRestantes());
+            } else if (eventoEncontrado instanceof Show) {
+                Show show = (Show) eventoEncontrado;
+                System.out.println("Ingressos Meia Restantes: " + show.getIngressosMeiaRestantes());
+                System.out.println("Ingressos Inteira Restantes: " + show.getIngressosInteiraRestantes());
+            }
         } else {
             System.out.println("Erro: Evento não encontrado.");
         }
     }
+    
 
     public static void listarTodosEventos() {
         String resultado = eventoDAO.listarTodosEventos();
