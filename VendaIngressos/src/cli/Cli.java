@@ -46,6 +46,9 @@ public class Cli {
                 case 5:
                     venderIngresso(evento);
                     break;
+                case 6:
+                    qtdIngresso();
+                    break;
                 default:
                     leitor.close();
                     System.out.println("Volte sempre!");
@@ -62,6 +65,7 @@ public class Cli {
         System.out.println("3 - Listar Todos os Eventos");
         System.out.println("4 - Remover Evento");
         System.out.println("5 - Vender Ingresso");
+        System.out.println("6 - Ingressos Restantes");
         System.out.println("0 - Sair");
     }
 
@@ -135,6 +139,13 @@ public class Cli {
         } else {
             System.out.println("Erro: Evento não encontrado.");
         }
+    }
+
+    public static void qtdIngresso() {
+        System.out.print("Digite o nome do evento: ");
+        String nome = leitor.next();
+        String eventoEncontrado = eventoDAO.qtdIngresso(nome);
+        System.out.println(eventoEncontrado);
     }
 
     public static void listarTodosEventos() {

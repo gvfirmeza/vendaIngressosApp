@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import entidades.evento.Evento;
+import entidades.evento.Exposicao;
+import entidades.evento.Jogo;
+import entidades.evento.Show;
 
 public class EventoDAO {
     private Map<String, Evento> eventos;
@@ -53,5 +56,27 @@ public class EventoDAO {
             }
             return result.toString();
         }
+    }
+
+    public String qtdIngresso(String nome) {
+        Evento evento = eventos.get(nome);
+
+        if (evento == null) {
+            return "Erro: Evento não encontrado.";
+        } else if (evento instanceof Exposicao) {
+            Exposicao exposicao = (Exposicao) evento;
+            return "Ingressos Meia Restantes: " + exposicao.getIngressosMeiaRestantes() + "\n"
+                    + "Ingressos Inteira Restantes: " + exposicao.getIngressosInteiraRestantes();
+        } else if (evento instanceof Jogo) {
+            Jogo jogo = (Jogo) evento;
+            return "Ingressos Meia Restantes: " + jogo.getIngressosMeiaRestantes() + "\n"
+                    + "Ingressos Inteira Restantes: " + jogo.getIngressosInteiraRestantes();
+        } else if (evento instanceof Show) {
+            Show show = (Show) evento;
+            return "Ingressos Meia Restantes: " + show.getIngressosMeiaRestantes() + "\n"
+                    + "Ingressos Inteira Restantes: " + show.getIngressosInteiraRestantes();
+        }
+
+        return "Erro: Tipo de evento não reconhecido";
     }
 }
