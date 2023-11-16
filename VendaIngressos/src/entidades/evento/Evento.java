@@ -56,6 +56,15 @@ public abstract class Evento {
         return quantidade <= this.ingressosInteira;
     }
 
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+
+    public void setLocal(String local) {
+        this.local = local;
+    }
+
+
     public void venderIngresso(TipoIngresso tipo, int quantidade) {
         if (this.isIngressoDisponivel(tipo, quantidade)) {
             if (tipo.equals(TipoIngresso.MEIA)) {

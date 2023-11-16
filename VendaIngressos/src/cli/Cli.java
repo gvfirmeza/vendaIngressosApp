@@ -49,6 +49,9 @@ public class Cli {
                 case 6:
                     qtdIngresso();
                     break;
+                case 7:
+                    atualizarEvento();
+                    break;
                 default:
                     leitor.close();
                     System.out.println("Volte sempre!");
@@ -66,6 +69,7 @@ public class Cli {
         System.out.println("4 - Remover Evento");
         System.out.println("5 - Vender Ingresso");
         System.out.println("6 - Ingressos Restantes");
+        System.out.println("7 - Atualizar evento:");
         System.out.println("0 - Sair");
     }
 
@@ -162,6 +166,30 @@ public class Cli {
 
     public static void venderIngresso(Evento evento) {
 
+    }
+
+    public static void atualizarEvento(){
+        System.out.println("Digite o nome do evento que deseja atualizar: ");
+        String nome = leitor.next();
+
+        Evento evento = eventoDAO.buscarEventoPorNome(nome);
+
+        if (evento != null){
+            System.out.println("Digite a nova data do evento (AAAA-MM-DD)");
+            String novaDataString = leitor.next();
+            LocalDate novaData = LocalDate.parse(novaDataString);
+
+            System.out.println("Digite o novo local do evento: ");
+            String novoLocal = leitor.next();
+
+            evento.setData(novaData);
+            evento.setLocal(novoLocal);
+
+            System.out.println("Evento atualizado com sucesso!");
+        }
+        else{
+            System.out.println("Erro: Evento não encontrado.");
+        }
     }
 
     public static void carregarEventos(EventoDAO eventoDAO, String fileName) {
