@@ -1,2 +1,2 @@
-Exposicao,Expo,2023-12-01,Museu,50,100,20.0,16,7,
-Show,Show,2023-11-25,Arena,20,40,60.0,ArtistaFamoso,Rock,
+Exposicao,Expo,2024-03-22,IBMEC,20,40,32.0,10,2,
+Jogo,Rodada12,2023-12-10,Maracana,500,600,80.0,Futebol,Flamengo,Cruzeiro,

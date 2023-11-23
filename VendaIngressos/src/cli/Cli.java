@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import dao.EventoDAO;
@@ -87,9 +88,10 @@ public class Cli {
 
         System.out.print("Digite o nome do evento: ");
         String nome = leitor.next();
-        System.out.print("Digite a data do evento (formato YYYY-MM-DD): ");
+        System.out.print("Digite a data do evento (formato DD/MM/YYYY): ");
         String dataString = leitor.next();
-        LocalDate data = LocalDate.parse(dataString);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate data = LocalDate.parse(dataString, formatter);
         System.out.print("Digite o local do evento: ");
         String local = leitor.next();
         System.out.print("Digite a quantidade de ingressos meia: ");
@@ -261,8 +263,7 @@ public class Cli {
                 String[] values = line.split(",");
                 String tipoEvento = values[0];
                 String nome = values[1];
-                LocalDate data = LocalDate.parse(values[2]); // Assumindo que a data está no formato padrão ISO (n tirem
-                                                             // esse coment, temo q ver se isso ta certo)
+                LocalDate data = LocalDate.parse(values[2]);
                 String local = values[3];
                 int ingressosMeia = Integer.parseInt(values[4]);
                 int ingressosInteira = Integer.parseInt(values[5]);
