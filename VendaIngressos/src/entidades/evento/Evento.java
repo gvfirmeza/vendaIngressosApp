@@ -2,6 +2,7 @@ package entidades.evento;
 
 import entidades.ingresso.TipoIngresso;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public abstract class Evento {
     private String nome;
@@ -77,6 +78,7 @@ public abstract class Evento {
 
     @Override
     public String toString() {
-        return "\n" + this.nome + " - " + this.data + " - " + this.local;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return "\n" + this.nome + " - " + this.data.format(formatter) + " - " + this.local;
     }
 }
