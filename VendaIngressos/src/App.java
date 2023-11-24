@@ -1,7 +1,7 @@
-import entidades.Menu;
+import cli.Cli;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        Menu.metodoInterface();
+        Cli.executar();
     }
 }

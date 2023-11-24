@@ -1,52 +1,42 @@
 package entidades.evento;
 
-// Subclasse Shows
+import java.time.LocalDate;
+
 public class Show extends Evento {
-    private String nomeArtista;
-    private String generoMusica;
-    private double precoTotal;
-    public static boolean pista;
-    public static boolean tipoIngressoComprado = false;
+    private String artista, genero;
 
-    public Show(String nome, String data, String local, int ingressosInteira, int ingressosMeia, String nomeArtista, String generoMusica, double precoTotal) {
-        super(nome, data, local, ingressosInteira, ingressosMeia);
-        this.nomeArtista = nomeArtista;
-        this.generoMusica = generoMusica;
-        this.precoTotal = precoTotal;
+    public Show(String nome, LocalDate data, String local, int ingressosMeia, int ingressosInteira, double precoCheio, String artista, String genero) {
+        super(nome, data, local, ingressosMeia, ingressosInteira, precoCheio);
+        this.artista = artista;
+        this.genero = genero;
     }
 
-    public String getNomeArtista() {
-        return this.nomeArtista;
+    public String getArtista() {
+        return artista;
     }
 
-    public void setNomeArtista(String nomeArtista) {
-        this.nomeArtista = nomeArtista;
+    public String getGenero() {
+        return genero;
     }
 
-    public String getGeneroMusica() {
-        return this.generoMusica;
+    public int getIngressosVendidosMeia() {
+        return 0;
+    }
+    
+    public int getIngressosVendidosInteira() {
+        return 0;
     }
 
-    public void setGeneroMusica(String generoMusica) {
-        this.generoMusica = generoMusica;
+    public int getIngressosMeiaRestantes() {
+        return getIngressosMeia() - getIngressosVendidosMeia();
     }
 
-    @Override
-    public double getPrecoInteira() {
-        return precoTotal;
-    }
-
-    @Override
-    public double getPrecoMeia() {
-        return precoTotal/2;
+    public int getIngressosInteiraRestantes() {
+        return getIngressosInteira() - getIngressosVendidosInteira();
     }
 
     @Override
-    public double getPrecoPago() {
-        if (tipoIngressoComprado) {
-        return getPrecoInteira();
-        } else {
-            return getPrecoMeia();
-        }
+    public String toString() {
+        return super.toString() + "\n" + this.artista + " - " + this.genero;
     }
 }

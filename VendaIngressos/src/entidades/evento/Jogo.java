@@ -1,70 +1,48 @@
 package entidades.evento;
 
-public class Jogo extends Evento {
-    private String esporte;
-    private String equipesCompetindo;
-    private double precoTotal;
-    public static boolean torcedor;
-    public static boolean tipoIngressoComprado = false;
+import java.time.LocalDate;
 
-    public Jogo(String nome, String data, String local, int ingressosInteira, int ingressosMeia, String esporte, String equipesCompetindo, double precoTotal) {
-        super(nome, data, local, ingressosInteira, ingressosMeia);
+public class Jogo extends Evento {
+    private String esporte, equipeCasa, equipeAdversaria;
+
+    public Jogo(String nome, LocalDate data, String local, int ingressosMeia, int ingressosInteira, double precoCheio, String esporte, String equipeCasa, String equipeAdversaria) {
+        super(nome, data, local, ingressosMeia, ingressosInteira, precoCheio);
         this.esporte = esporte;
-        this.equipesCompetindo = equipesCompetindo;
-        this.precoTotal = precoTotal;
+        this.equipeAdversaria = equipeAdversaria;
+        this.equipeCasa = equipeCasa;
     }
 
     public String getEsporte() {
         return esporte;
     }
 
-    public void setEsporte(String esporte) {
-        this.esporte = esporte;
+    public String getEquipeCasa() {
+        return equipeCasa;
     }
 
-    public String getEquipesCompetindo() {
-        return equipesCompetindo;
+    public String getEquipeAdversaria() {
+        return equipeAdversaria;
     }
 
-    public void setEquipesCompetindo(String equipesCompetindo) {
-        this.equipesCompetindo = equipesCompetindo;
+    public int getIngressosVendidosMeia() {
+        return 0;
+    }
+    
+    public int getIngressosVendidosInteira() {
+        return 0;
+    }
+    
+
+    public int getIngressosMeiaRestantes() {
+        return getIngressosMeia() - getIngressosVendidosMeia();
     }
 
-    public double getPrecoTotal() {
-        return precoTotal;
-    }
-
-    public void setPrecoTotal(double precoTotal) {
-        this.precoTotal = precoTotal;
-    }
-
-    @Override
-    public double getPrecoInteira() {
-        if (torcedor == true){
-            precoTotal = precoTotal * 0.85;
-            return precoTotal;
-        } else {
-            return precoTotal;
-        }
+    public int getIngressosInteiraRestantes() {
+        return getIngressosInteira() - getIngressosVendidosInteira();
     }
 
     @Override
-    public double getPrecoMeia() {
-        if (torcedor == true){
-            precoTotal = precoTotal/2;
-            precoTotal = precoTotal * 0.85;
-            return precoTotal;
-        } else {
-            return precoTotal / 2.0;
-        }
-    }
-
-    @Override
-    public double getPrecoPago() {
-        if (tipoIngressoComprado) {
-        return getPrecoInteira();
-        } else {
-            return getPrecoMeia();
-        }
+    public String toString() {
+        return super.toString() + "\n" + this.esporte + " - " + this.equipeCasa + " x " + this.equipeAdversaria;
     }
 }
