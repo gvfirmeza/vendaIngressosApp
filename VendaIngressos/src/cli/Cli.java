@@ -58,11 +58,13 @@ public class Cli {
                 case 7:
                     atualizarEvento();
                     break;
-                default:
+                case 0:
                     leitor.close();
                     System.out.println("Volte sempre!");
                     salvarEventos(eventoDAO, "eventos.txt");
                     return;
+                default:
+                    System.out.println("Opção inválida");
             }
         }
     }
@@ -75,7 +77,7 @@ public class Cli {
         System.out.println("4 - Remover Evento");
         System.out.println("5 - Vender Ingresso");
         System.out.println("6 - Ingressos Restantes");
-        System.out.println("7 - Atualizar evento:");
+        System.out.println("7 - Atualizar evento");
         System.out.println("0 - Sair");
     }
 
@@ -85,65 +87,74 @@ public class Cli {
         System.out.println("2 - Jogo");
         System.out.println("3 - Show");
         int tipoEvento = leitor.nextInt();
+        
+        if (tipoEvento == 1 || tipoEvento == 2 || tipoEvento == 3) {
+            System.out.print("Digite o nome do evento: ");
+            leitor.nextLine();
+            String nome = leitor.nextLine();
+            System.out.print("Digite a data do evento (formato DD/MM/YYYY): ");
+            String dataString = leitor.next();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate data = LocalDate.parse(dataString, formatter);
+            System.out.print("Digite o local do evento: ");
+            leitor.nextLine();
+            String local = leitor.nextLine();
+            System.out.print("Digite a quantidade de ingressos meia: ");
+            int ingressosMeia = leitor.nextInt();
+            System.out.print("Digite a quantidade de ingressos inteira: ");
+            int ingressosInteira = leitor.nextInt();
+            System.out.print("Digite o preço cheio do ingresso: ");
+            double precoCheio = leitor.nextDouble();
 
-        System.out.print("Digite o nome do evento: ");
-        String nome = leitor.next();
-        System.out.print("Digite a data do evento (formato DD/MM/YYYY): ");
-        String dataString = leitor.next();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate data = LocalDate.parse(dataString, formatter);
-        System.out.print("Digite o local do evento: ");
-        String local = leitor.next();
-        System.out.print("Digite a quantidade de ingressos meia: ");
-        int ingressosMeia = leitor.nextInt();
-        System.out.print("Digite a quantidade de ingressos inteira: ");
-        int ingressosInteira = leitor.nextInt();
-        System.out.print("Digite o preço cheio do ingresso: ");
-        double precoCheio = leitor.nextDouble();
+            Evento evento = null;
 
+            switch (tipoEvento) {
+                case 1:
+                    System.out.print("Digite a faixa etária mínima da exposição: ");
+                    int faixaEtariaMinima = leitor.nextInt();
+                    System.out.print("Digite a duração em dias da exposição: ");
+                    int duracaoDias = leitor.nextInt();
+                    evento = new Exposicao(nome, data, local, ingressosMeia, ingressosInteira, precoCheio,
+                            faixaEtariaMinima, duracaoDias);
+                    break;
+                case 2:
+                    System.out.print("Digite o esporte do jogo: ");
+                    String esporte = leitor.next();
+                    System.out.print("Digite a equipe da casa: ");
+                    leitor.nextLine();
+                    String equipeCasa = leitor.nextLine();
+                    System.out.print("Digite a equipe adversária: ");
+                    String equipeAdversaria = leitor.nextLine();
+                    evento = new Jogo(nome, data, local, ingressosMeia, ingressosInteira, precoCheio, esporte, equipeCasa,
+                            equipeAdversaria);
+                    break;
+                case 3:
+                    System.out.print("Digite o nome do artista do show: ");
+                    leitor.nextLine();
+                    String artista = leitor.nextLine();
+                    System.out.print("Digite o gênero musical do show: ");
+                    String genero = leitor.nextLine();
+                    evento = new Show(nome, data, local, ingressosMeia, ingressosInteira, precoCheio, artista, genero);
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+            }
+
+            if (evento != null) {
+                String mensagem = eventoDAO.adicionarEvento(evento);
+                System.out.println(mensagem);
+            }
+        } else {System.out.println("Opção inválida");}
+
+        
         Evento evento = null;
-
-        switch (tipoEvento) {
-            case 1:
-                System.out.print("Digite a faixa etária mínima da exposição: ");
-                int faixaEtariaMinima = leitor.nextInt();
-                System.out.print("Digite a duração em dias da exposição: ");
-                int duracaoDias = leitor.nextInt();
-                evento = new Exposicao(nome, data, local, ingressosMeia, ingressosInteira, precoCheio,
-                        faixaEtariaMinima, duracaoDias);
-                break;
-            case 2:
-                System.out.print("Digite o esporte do jogo: ");
-                String esporte = leitor.next();
-                System.out.print("Digite a equipe da casa: ");
-                String equipeCasa = leitor.next();
-                System.out.print("Digite a equipe adversária: ");
-                String equipeAdversaria = leitor.next();
-                evento = new Jogo(nome, data, local, ingressosMeia, ingressosInteira, precoCheio, esporte, equipeCasa,
-                        equipeAdversaria);
-                break;
-            case 3:
-                System.out.print("Digite o nome do artista do show: ");
-                String artista = leitor.next();
-                System.out.print("Digite o gênero musical do show: ");
-                String genero = leitor.next();
-                evento = new Show(nome, data, local, ingressosMeia, ingressosInteira, precoCheio, artista, genero);
-                break;
-            default:
-                System.out.println("Opção inválida.");
-        }
-
-        if (evento != null) {
-            String mensagem = eventoDAO.adicionarEvento(evento);
-            System.out.println(mensagem);
-        }
-
         return evento;
     }
 
     public static void exibirEvento() {
         System.out.print("Digite o nome do evento: ");
-        String nome = leitor.next();
+        leitor.nextLine();
+        String nome = leitor.nextLine();
 
         Evento eventoEncontrado = eventoDAO.buscarEventoPorNome(nome);
 
@@ -156,7 +167,8 @@ public class Cli {
 
     public static void qtdIngresso() {
         System.out.print("Digite o nome do evento: ");
-        String nome = leitor.next();
+        leitor.nextLine();
+        String nome = leitor.nextLine();
         String eventoEncontrado = eventoDAO.qtdIngresso(nome);
         System.out.println(eventoEncontrado);
     }
@@ -168,14 +180,16 @@ public class Cli {
 
     public static void removerEvento() {
         System.out.print("Digite o nome do evento: ");
-        String nome = leitor.next();
+        leitor.nextLine();
+        String nome = leitor.nextLine();
         String resultado = eventoDAO.removerEvento(nome);
         System.out.println(resultado);
     }
 
     public static Ingresso venderIngresso() {
         System.out.print("Digite o nome do evento para o qual deseja vender ingressos: ");
-        String nomeEvento = leitor.next();
+        leitor.nextLine();
+        String nomeEvento = leitor.nextLine();
 
         Evento evento = eventoDAO.buscarEventoPorNome(nomeEvento);
 
@@ -228,24 +242,33 @@ public class Cli {
     }
 
     private static TipoIngresso obterTipoIngresso() {
+        while (true) {
         System.out.print("Informe o tipo do ingresso (meia ou inteira): ");
         String tipo = leitor.next().toLowerCase();
-        return tipo.equals("meia") ? TipoIngresso.MEIA : TipoIngresso.INTEIRA;
+        if (tipo.equals("meia")) {
+            return TipoIngresso.MEIA;
+        } else if (tipo.equals("inteira")) {
+            return TipoIngresso.INTEIRA;
+        } else { System.out.println("Tipo de ingresso inválido"); }
+    }
     }
 
     public static void atualizarEvento() {
         System.out.println("Digite o nome do evento que deseja atualizar: ");
-        String nome = leitor.next();
+        leitor.nextLine();
+        String nome = leitor.nextLine();
 
         Evento evento = eventoDAO.buscarEventoPorNome(nome);
 
         if (evento != null) {
-            System.out.println("Digite a nova data do evento (AAAA-MM-DD)");
+            System.out.println("Digite a nova data do evento (formato DD/MM/YYYY)");
             String novaDataString = leitor.next();
-            LocalDate novaData = LocalDate.parse(novaDataString);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate novaData = LocalDate.parse(novaDataString, formatter);
 
             System.out.println("Digite o novo local do evento: ");
-            String novoLocal = leitor.next();
+            leitor.nextLine();
+            String novoLocal = leitor.nextLine();
 
             evento.setData(novaData);
             evento.setLocal(novoLocal);

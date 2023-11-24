@@ -1,2 +1,0 @@
-Exposicao,Expo,2024-03-22,IBMEC,20,40,32.0,10,2,
-Jogo,Rodada12,2023-12-10,Maracana,500,600,80.0,Futebol,Flamengo,Cruzeiro,
